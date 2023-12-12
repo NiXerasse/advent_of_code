@@ -11,14 +11,14 @@ def check(s, i, p, x, y):
             (i + p == len(s) or s[i + p] in '.?')
     )
 
-
 def get_variants(s, p):
     S, P = len(s), len(p)
+    # dp[k][i] - number of ways to place first k + 1 patterns with last pattern ending at position i
     dp = [[0] * S for _ in range(P)]
     for k in range(P):
         for i in range(S):
             pos = i - p[k] + 1
-            if pos >= 0 and check(s, pos, p[k], sum(p[:k]), sum(p[k+1:])):
+            if pos >= 0 and check(s, pos, p[k], sum(p[:k]), sum(p[k + 1:])):
                 if k == 0:
                     dp[k][i] = 1
                 else:
@@ -27,7 +27,6 @@ def get_variants(s, p):
                         if s[j] == '#':
                             break
     return sum(dp[-1])
-
 
 with open('input.txt') as f:
     total = 0
